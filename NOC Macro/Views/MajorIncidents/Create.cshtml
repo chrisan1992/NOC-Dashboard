@@ -1,0 +1,142 @@
+﻿@model NOC_Macro.Models.MajorIncidents
+
+@{
+    ViewBag.Title = "New Major Incident";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>New Major Incident</h2>
+                <div class="clearfix"></div>
+            </div>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.incidentNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.incidentNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.incidentNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.descr, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.descr, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.descr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.product, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <select name="product" class="form-control" multiple>
+                                    <option value="AGM" selected>AGM</option>
+                                    <option value="ALM Octane">ALM Octane</option>
+                                    <option value="ALM PC">ALM PC</option>
+                                    <option value="ALM QC">ALM QC</option>
+                                    <option value="AnM">AnM</option>
+                                    <option value="APM">APM</option>
+                                    <option value="AppPulse Active">AppPulse Active</option>
+                                    <option value="AppPulse Mobile">AppPulse Mobile</option>
+                                    <option value="AppPulse Trace">AppPulse Trace</option>
+                                    <option value="ART">ART</option>
+                                    <option value="Cross Services">Cross Services</option>
+                                    <option value="DB">DB</option>
+                                    <option value="Portal">Portal</option>
+                                    <option value="PPM">PPM</option>
+                                    <option value="RC">RC</option>
+                                    <option value="SAW">SAW</option>
+                                    <option value="SM">SM</option>
+                                    <option value="SRL/PTaaS">SRL/PTaaS</option>
+                                    <option value="SRF">SRF</option>
+                                    <option value="UCMDB">UCMDB</option>
+                                    <option value="UT">UT</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.product, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.dataCenter, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <select name="datacenter" class="form-control" multiple>
+                                    <option value="Austin (NGDC)" selected>Austin (NGDC)</option>
+                                    <option value="Austin (NGDC2)">Austin (NGDC2)</option>
+                                    <option value="AusAWS Oregontin2">AWS Oregon</option>
+                                    <option value="AWS Frankfurt">AWS Frankfurt</option>
+                                    <option value="Redwood City">Redwood City</option>
+                                    <option value="Sydney">Sydney</option>
+                                    <option value="Reading">Reading</option>
+                                    <option value="Kamloops">Kamloops</option>
+                                    <option value="Paris">Paris</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.dataCenter, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.categorization, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="categorization" value="1" checked>
+                                        Availability
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="categorization" value="2">
+                                        Major Functionality
+                                    </label>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.categorization, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.customerType, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="customerType" value="1" checked>
+                                        TOP Customer
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="customerType" value="2">
+                                        Multi Customer
+                                    </label>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.customerType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <input type="checkbox" name="lyncCall" value="1"> Lync Conference?
+                            </div>
+                        </div>
+
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-success" />
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+        </div>
+    </div>
+</div>
