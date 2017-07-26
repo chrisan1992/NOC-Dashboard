@@ -55,7 +55,7 @@ namespace NOC_Macro
             }
 
             //closing the table
-            msg.Body += "</table>";
+            msg.Body += "</table><br/><br/>We are working with the relevant teams to solve the issue.<br/><br/> Incident #" + i.incidentNumber + " is opened<br/><br/>More Updates will follow.<br/>";
             
             //full html email message
             //msg.Body = "<html><head><style>#format-table,#format-table th,#format-table td{border: 0px;font-family: Calibri; font-size:13;padding: 3px;margin:0 auto;}#main-table, #main-table tr, #main-table td{border: 1px solid black;font-family: Calibri; font-size:13;padding: 3px;}</style></head><body><table id='format-table' width='600px'><tr style='background-color:#61476D;color:#fff;'><td style='font-size: 20px; padding: 10px;'>Hewlett Packard Enterprise</td></tr><tr><td>Hi All,<br/><br/>" + msg.Body + "<br/><br/> We are working with the relevant teams to solve the issue.<br/><br/>Incident #" + i.incidentNumber + " is opened<br/><br/>More Updates will follow.<br/></td></tr></table>";

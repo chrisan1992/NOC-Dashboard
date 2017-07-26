@@ -80,15 +80,7 @@
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li><a href="javascript:;"> Profile</a></li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge bg-red pull-right">50%</span>
-                                            <span>Settings</span>
-                                        </a>
-                                    </li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                    <li>@Html.ActionLink("Log Out", "LogOut", "HomeController", new { })</li>
                                 </ul>
                             </li>
 
@@ -100,6 +92,14 @@
             <!-- page content -->
             <div class="right_col" role="main" style="height:100vh;">
                 <div class="">
+
+                    <div class="alert alert-warning alert-dismissible fade in" role="alert" id="view-message-div" hidden>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            
+                        </button>
+                        <span id="view-message"></span>
+                    </div>
+
                     @RenderBody()
                 </div>
             </div>
@@ -124,5 +124,17 @@
     <!-- Custom Theme Scripts -->
     @Scripts.Render("~/Scripts/custom.min.js")
 
-</body>
-</html>
+
+    @{
+        if (ViewBag.Message !=  null && ViewBag.Message != "null")
+        {//show message to view
+            <script type="text/javascript">
+                $("#view-message").html('@ViewBag.Message');
+                $("#view-message-div").show();
+            </script>
+            ViewBag.Message = "null";
+        }
+    }
+
+</body >
+</html >

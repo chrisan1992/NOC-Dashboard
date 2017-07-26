@@ -159,6 +159,7 @@
     <Compile Include="Models\MajorIncidents.cs">
       <DependentUpon>NOCModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MajorIncidentsMetaData.cs" />
     <Compile Include="Models\NOCModels.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

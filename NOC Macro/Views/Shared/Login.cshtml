@@ -24,9 +24,34 @@
         <div class="login_wrapper">
 
             <div class="animate form login_form">
+
+                <div class="alert alert-warning alert-dismissible fade in" role="alert" id="view-message-div" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <span id="view-message"></span>
+                </div>
+
                 @RenderBody()
             </div>
         </div>
     </div>
+
+    <!-- jQuery -->
+    @Scripts.Render("~/Scripts/jquery.js")
+
+
+    @{
+        if (ViewBag.Message != null && ViewBag.Message != "null")
+        {//show message to view
+            <script type="text/javascript">
+                $("#view-message").html('@ViewBag.Message');
+                $("#view-message-div").show();
+            </script>
+            ViewBag.Message = "null";
+        }
+    }
+
+
 </body>
 </html>

@@ -46,16 +46,21 @@ namespace NOC_Macro.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,UserName,Emailpass")] Users users)
+        public ActionResult Create([Bind(Include = "Id,Email,UserName,Emailpass")] Users users, String confirmPassword)
         {
-            users.Emailpass = Utilities.Encrypt(users.Emailpass);
             if (ModelState.IsValid)
             {
-                db.Users.Add(users);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (users.Emailpass == confirmPassword)
+                {
+                    users.Emailpass = Utilities.Encrypt(users.Emailpass);
+                    db.Users.Add(users);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Message = "Passwords don't match. Please try again.";
+                return View(users);
             }
-
+            ViewBag.Message = "User wasn't registered. Please try again.";
             return View(users);
         }
 

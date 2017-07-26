@@ -69,5 +69,11 @@ namespace NOC_Macro.Controllers
             //if succedded, to the homepage
             return RedirectToAction("Index");
         }
+
+        public ActionResult LogOut()
+        {
+            Session["user_logged"] = false;
+            return RedirectToAction("Login", "Home");
+        }
     }
 }

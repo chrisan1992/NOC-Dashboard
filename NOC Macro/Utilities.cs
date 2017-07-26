@@ -13,7 +13,8 @@ namespace NOC_Macro
 
         public static Boolean IsUserLogged()
         {
-            if (HttpContext.Current.Session["user_logged"] != null)
+            if (HttpContext.Current.Session["user_logged"] != null &&  
+                (Boolean)HttpContext.Current.Session["user_logged"] == true)
             {
                 return true;
             }
