@@ -57,10 +57,10 @@ namespace NOC_Macro.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.Message = "Passwords don't match. Please try again.";
+                Session["message"] = "Passwords don't match. Please try again.";
                 return View(users);
             }
-            ViewBag.Message = "User wasn't registered. Please try again.";
+            Session["message"] = "User wasn't registered. Please try again.";
             return View(users);
         }
 
@@ -76,6 +76,7 @@ namespace NOC_Macro.Controllers
             {
                 return HttpNotFound();
             }
+            String v = ViewBag.Message;
             return View(users);
         }
 
@@ -128,6 +129,44 @@ namespace NOC_Macro.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult ChangePassword(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Users users = db.Users.Find(id);
+            if (users == null)
+            {
+                return HttpNotFound();
+            }
+            String v = ViewBag.Message;
+            ViewBag.id = id;
+            return View(users);
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(String currentPassword, String newPassword, String confirmPassword, String idU)
+        {
+            try
+            {
+                int result = (int)(db.AutenticateUser(Session["user_email"].ToString(), Utilities.Encrypt(currentPassword)).First());
+                if (newPassword == confirmPassword)
+                {
+                    //call stored procedure to update
+                    db.UpdateUserPassword(result, Utilities.Encrypt(newPassword));
+                    return RedirectToAction("Index","Home");
+                }
+                Session["message"] = "Please check on the new Password.";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Session["message"] = "The current password doesn't match. Please try again.";
+                return RedirectToAction("ChangePassword", "Users", new { id = idU });
+            }
         }
     }
 }

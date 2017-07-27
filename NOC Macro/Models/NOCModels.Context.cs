@@ -44,5 +44,18 @@ namespace NOC_Macro.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("AutenticateUser", usernameParameter, passParameter);
         }
+    
+        public virtual int UpdateUserPassword(Nullable<int> userID, string newPassword)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var newPasswordParameter = newPassword != null ?
+                new ObjectParameter("NewPassword", newPassword) :
+                new ObjectParameter("NewPassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUserPassword", userIDParameter, newPasswordParameter);
+        }
     }
 }

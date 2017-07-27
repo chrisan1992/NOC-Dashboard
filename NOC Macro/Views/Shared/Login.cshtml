@@ -42,13 +42,13 @@
 
 
     @{
-        if (ViewBag.Message != null && ViewBag.Message != "null")
+        if (Session["message"] != null && Session["message"] != "null")
         {//show message to view
             <script type="text/javascript">
-                $("#view-message").html('@ViewBag.Message');
+                $("#view-message").html('@Session["message"]');
                 $("#view-message-div").show();
             </script>
-            ViewBag.Message = "null";
+            Session["message"] = "null";
         }
     }
 

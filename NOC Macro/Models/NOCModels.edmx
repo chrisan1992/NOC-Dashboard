@@ -71,6 +71,10 @@
           <Parameter Name="username" Type="varchar" Mode="In" />
           <Parameter Name="pass" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="UpdateUserPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="NewPassword" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="NOCModelStoreContainer">
           <EntitySet Name="MajorIncidents" EntityType="Self.MajorIncidents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
@@ -118,6 +122,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UsersPermissions" EntitySet="UsersPermissions" />
           </AssociationSet>
+          <FunctionImport Name="UpdateUserPassword">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="NewPassword" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Permission">
           <Key>
@@ -218,6 +226,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateUserPassword" FunctionName="NOCModel.Store.UpdateUserPassword" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
