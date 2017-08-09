@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NOC_Macro.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="NOC_Macro_com_hpe_saas_essentials_DemandService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://essentials.saas.hpe.com/itg/ppmservices/DemandService</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

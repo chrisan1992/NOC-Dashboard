@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using NOC_Macro.Models;
 using System.Net.Mail;
+using Oracle.ManagedDataAccess.Client;
 
 namespace NOC_Macro.Controllers
 {
@@ -134,6 +135,49 @@ namespace NOC_Macro.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// GET Method for Major Incident Dashboard
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Dashboard(int? id)
+        {
+            if (id >= 0)
+            {//valid ID to query
+                String query = "select reqs.description incidentTitle,";
+                query += "dets.visible_parameter1 startDate, ";
+                query += "dets.visible_parameter2 endDate, ";
+                query += "dets.visible_parameter40 CustomerType, ";
+                query += "hdets.visible_parameter17 GOwnership,";
+                query += "hdets.visible_parameter18 environment, ";
+                query += "hdets.visible_parameter8 ImpactType, ";
+                query += "hdets.visible_parameter20 IncidentManager,";
+                query += "hdets.visible_parameter19 DataCenter,";
+                query += "hdets.visible_parameter13 ProductLine ";
+                //From
+                query += "from kcrt_request_details dets, kcrt_requests reqs, kcrt_req_header_details hdets ";
+                //Where
+                query += "where dets.request_id = " + id + " and reqs.request_id = " + id + " and hdets.request_id = " + id + " and dets.batch_number = 1";
+
+
+                DataTable dt = Utilities.ExecuteOracleQuery(query);
+                if (dt != null)
+                {
+                    //group, datacenter, impact, environment, product, customers impacted
+                    ViewBag.IncidentName = dt.Rows[0][0].ToString();
+                    ViewBag.StartDate = dt.Rows[0][1].ToString();
+                    ViewBag.EndDate = dt.Rows[0][2].ToString();
+                    ViewBag.CustomerType = dt.Rows[0][3].ToString();
+                    ViewBag.GroupOwnership = dt.Rows[0][4].ToString();
+                    ViewBag.Datacenter = dt.Rows[0][8].ToString();
+                    ViewBag.ImpactType = dt.Rows[0][6].ToString();
+                    ViewBag.Environment = dt.Rows[0][5].ToString();
+                    ViewBag.ProductLine = dt.Rows[0][9].ToString();
+                }
+            }
+            return View();
         }
         
     }

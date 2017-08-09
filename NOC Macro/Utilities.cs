@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,7 +15,7 @@ namespace NOC_Macro
 
         public static Boolean IsUserLogged()
         {
-            if (HttpContext.Current.Session["user_logged"] != null &&  
+            if (HttpContext.Current.Session["user_logged"] != null &&
                 (Boolean)HttpContext.Current.Session["user_logged"] == true)
             {
                 return true;
@@ -22,7 +24,7 @@ namespace NOC_Macro
             {
                 return false;
             }
-        }        
+        }
 
         public static string Encrypt(string data, string key = null)
         {
@@ -63,6 +65,37 @@ namespace NOC_Macro
             objRijndaelManaged.Key = keyBytes;
             objRijndaelManaged.IV = keyBytes;
             return objRijndaelManaged;
+        }
+
+        public static DataTable ExecuteOracleQuery(String query)
+        {
+            DataTable result = null;
+            OracleConnection oraConnection2 = null;
+            try {
+                oraConnection2 = new OracleConnection("Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)"
+                             + "(HOST=15.224.209.169)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)"
+                             + "(SERVICE_NAME=PPMPRD9)));"
+                             + "User Id=ITG118PRD;Password=MMS3CA3DEFB;");
+
+                oraConnection2.Open();
+
+
+                OracleDataAdapter cmd2 = new OracleDataAdapter(query, oraConnection2);
+
+                OracleCommandBuilder commandBuilder2 = new OracleCommandBuilder(cmd2);
+                result = new DataTable();
+                cmd2.Fill(result);
+            }
+
+            catch (Exception ex)
+            {
+                result = null;
+            }
+            finally
+            {//close the connection for further querys
+                oraConnection2.Close();
+            }
+            return result;
         }
     }
 }

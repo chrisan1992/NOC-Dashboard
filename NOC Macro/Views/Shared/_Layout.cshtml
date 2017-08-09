@@ -27,7 +27,7 @@
             <div class="col-md-3 left_col menu_fixed">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>SaaS NOC!</span></a>
+                        <a href="index.html" class="site_title"><i class="fa fa-dashboard"></i> <span>SaaS NOC!</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu profile quick info -->
@@ -48,14 +48,14 @@
                             <h3>General</h3>
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <a href="/"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="index.html">Dashboard</a></li> 
                                         <li><a href="index2.html">Dashboard2</a></li>
                                         <li><a href="index3.html">Dashboard3</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="/MajorIncidents/"><i class="fa fa-bookmark"></i> Major Incidents </a></li>
+                                <li><a href="/MajorIncidents/"><i class="fa fa-archive"></i> Major Incidents </a></li>
                             </ul>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     <li>@Html.ActionLink("Change Password", "ChangePassword", "Users",new { id = Session["user_id"] }, new { })</li>
-                                    <li>@Html.ActionLink("Log Out", "LogOut", "HomeController", new { })</li>
+                                    <li>@Html.ActionLink("Log Out","LogOut","Home")</li>
                                 </ul>
                             </li>
 
@@ -127,7 +127,7 @@
 
 
     @{
-        if (Session["message"] !=  null && Session["message"] != "null")
+        if (Session["message"] != null && Session["message"].ToString() != "null")
         {//show message to view
             <script type="text/javascript">
                 $("#view-message").html('@Session["message"]');

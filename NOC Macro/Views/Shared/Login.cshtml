@@ -42,7 +42,7 @@
 
 
     @{
-        if (Session["message"] != null && Session["message"] != "null")
+        if (Session["message"] != null && Session["message"].ToString() != "null")
         {//show message to view
             <script type="text/javascript">
                 $("#view-message").html('@Session["message"]');

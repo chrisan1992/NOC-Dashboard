@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="https://essentials.saas.hpe.com/itg/ppmservices/DemandService?xsd=xsd1" filename="DemandService.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="https://essentials.saas.hpe.com/itg/ppmservices/DemandService?xsd=xsd0" filename="DemandService0.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="https://essentials.saas.hpe.com/itg/ppmservices/DemandService?wsdl" filename="DemandService.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>

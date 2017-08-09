@@ -1,7 +1,11 @@
-﻿using NOC_Macro.Models;
+﻿using NOC_Macro.com.hpe.saas.essentials;
+using NOC_Macro.Models;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -22,20 +26,6 @@ namespace NOC_Macro.Controllers
                 return RedirectToAction("Login");
             }
             
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
 
         public ActionResult Login()
@@ -62,6 +52,7 @@ namespace NOC_Macro.Controllers
                 catch (Exception ex)
                 {
                     //if no succedded, to the login page
+                    Session["message"] = "Please check your credentials and try again";
                     return View("Login");
 
                 }
@@ -74,6 +65,17 @@ namespace NOC_Macro.Controllers
         {
             Session["user_logged"] = false;
             return RedirectToAction("Login", "Home");
+        }
+
+        /// <summary>
+        /// Generic method for guest users
+        /// redirects to a marjoincident dashboard with a guest user
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Dashboard(int? id)
+        {
+            //put code here
+            return View();
         }
     }
 }

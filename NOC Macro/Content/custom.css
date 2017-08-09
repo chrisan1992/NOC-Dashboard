@@ -1075,14 +1075,14 @@ h2 {
     width: 40%;
     float: right
 }
-.x_title h2 {
-    margin: 5px 0 6px;
-    float: left;
-    display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap
-}
+    .x_title h2 {
+        margin: 5px 0 6px;
+        float: left;
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 .x_title h2 small {
     margin-left: 10px
 }
@@ -1753,7 +1753,7 @@ span.right {
 }
 .dashboard_graph .col-md-9,
 .dashboard_graph .col-md-3 {
-    padding: 0
+    /*padding: 0*/
 }
 a.user-profile {
     color: #5E6974 !important
@@ -1901,7 +1901,7 @@ h4.graph_title {
     padding: 0
 }
 .tile-stats .count {
-    font-size: 38px;
+    font-size: 25px;
     font-weight: bold;
     line-height: 1.65857
 }
