@@ -5,13 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="fe2bf9529f9d45ea9f48f96a0cb52032" Name="Diagram1">
-        <EntityTypeShape EntityType="NOCModel.MajorIncidents" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NOCModel.Permission" Width="1.5" PointX="3.125" PointY="0.875" />
-        <EntityTypeShape EntityType="NOCModel.Users" Width="1.5" PointX="3.125" PointY="3.625" />
+        <EntityTypeShape EntityType="NOCModel.Permission" Width="1.5" PointX="3.5" PointY="0.75" />
+        <EntityTypeShape EntityType="NOCModel.Users" Width="1.5" PointX="8" PointY="0.5" />
         <EntityTypeShape EntityType="NOCModel.UsersPermissions" Width="1.5" PointX="5.375" PointY="0.625" />
         <AssociationConnector Association="NOCModel.FK__UsersPerm__Permi__36B12243" />
         <AssociationConnector Association="NOCModel.FK__UsersPerm__UserI__37A5467C" />
-      </Diagram>
+        <EntityTypeShape EntityType="NOCModel.MajorIncidents" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="NOCModel.Timeline" Width="1.5" PointX="0.5" PointY="3.125" />
+        <AssociationConnector Association="NOCModel.FK__Timeline__incide__0E6E26BF" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

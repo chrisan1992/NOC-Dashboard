@@ -27,10 +27,11 @@ namespace NOC_Macro.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<MajorIncidents> MajorIncidents { get; set; }
         public DbSet<Permission> Permission { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<UsersPermissions> UsersPermissions { get; set; }
+        public DbSet<MajorIncidents> MajorIncidents { get; set; }
+        public DbSet<Timeline> Timeline { get; set; }
     
         public virtual ObjectResult<Nullable<int>> AutenticateUser(string username, string pass)
         {

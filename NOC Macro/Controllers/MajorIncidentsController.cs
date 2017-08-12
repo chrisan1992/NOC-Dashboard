@@ -48,7 +48,7 @@ namespace NOC_Macro.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "iD,incidentNumber,descr,product,dataCenter,categorization,customerType")] MajorIncidents majorIncidents, string [] product, string [] datacenter, string lyncCall)
+        public ActionResult Create([Bind(Include = "incidentNumber,descr,product,dataCenter,categorization,customerType")] MajorIncidents majorIncidents, string[] product, string[] datacenter, string lyncCall)
         {
             majorIncidents.dataCenter = "";
             majorIncidents.product = "";
@@ -64,7 +64,7 @@ namespace NOC_Macro.Controllers
             {
                 db.MajorIncidents.Add(majorIncidents);
                 db.SaveChanges();
-                String emailResult = new EmailSender().SendMacroEmail(majorIncidents,lyncCall);
+                String emailResult = new EmailSender().SendMacroEmail(majorIncidents, lyncCall);
                 return RedirectToAction("Index");
             }
 
@@ -103,13 +103,13 @@ namespace NOC_Macro.Controllers
         }
 
         // GET: MajorIncidents/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? incidentNumber)
         {
-            if (id == null)
+            if (incidentNumber == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MajorIncidents majorIncidents = db.MajorIncidents.Find(id);
+            MajorIncidents majorIncidents = db.MajorIncidents.Find(incidentNumber);
             if (majorIncidents == null)
             {
                 return HttpNotFound();
@@ -179,6 +179,39 @@ namespace NOC_Macro.Controllers
             }
             return View();
         }
-        
+
+
+
+
+        public JsonResult AddTimeline(string timeline)
+        {
+            //every line of the json reads every number
+            try
+            {
+                Timeline t = new Timeline();
+                t.description = timeline;
+                t.incidentNumber = 135102;//CHANGE THIS!!!
+                t.time = DateTime.Now;
+                db.Timeline.Add(t);
+                db.SaveChanges();
+                var results = new List<int>()
+                {
+                    1
+                }.ToList();
+                //1 is good
+                return Json(results, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var results = new List<int>()
+                {
+                    0
+                }.ToList();
+                //0 is bad
+                return Json(results, JsonRequestBehavior.AllowGet);
+            }
+
+            
+        }
     }
 }

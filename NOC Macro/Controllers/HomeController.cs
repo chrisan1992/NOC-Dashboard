@@ -72,10 +72,12 @@ namespace NOC_Macro.Controllers
         /// redirects to a marjoincident dashboard with a guest user
         /// </summary>
         /// <returns></returns>
-        public ActionResult Dashboard(int? id)
+        public ActionResult Dashboard(int? incidentNumber, String user)
         {
+            //http://localhost:24062/Home/Dashboard/?incidentNumber=135102&user=Guest
             //put code here
-            return View();
+            Session["username"] = "Guest";
+            return RedirectToAction("Dashboard", "MajorIncidents",new { id = incidentNumber });
         }
     }
 }

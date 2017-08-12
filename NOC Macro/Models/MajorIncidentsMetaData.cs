@@ -14,7 +14,6 @@ namespace NOC_Macro.Models
 
     public class MajorIncidentsMetaData
     {
-        public int iD { get; set; }
 
         [Display(Name = "Incident #")]
         [Required(ErrorMessage = "Incident # is required")]

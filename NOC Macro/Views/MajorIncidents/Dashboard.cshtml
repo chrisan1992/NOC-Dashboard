@@ -7,197 +7,256 @@
 
 <h3>@ViewBag.IncidentName</h3>
 
-<div class="col-md-4 col-sm-4 col-xs-12">
-    <div class="x_panel tile fixed_height_320">
-        <div class="x_title">
-            <h2>Incident Details</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
+<div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>Incident Details</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
 
-            <table class="countries_list">
-                <tbody>
-                    <tr>
-                        <td>Group Ownership</td>
-                        <td class="fs15 fw700 text-right">@ViewBag.GroupOwnership</td>
-                    </tr>
-                    <tr>
-                        <td>Datacenter</td>
-                        <td class="fs15 fw700 text-right">@ViewBag.Datacenter</td>
-                    </tr>
-                    <tr>
-                        <td>Impact Type</td>
-                        <td class="fs15 fw700 text-right">@ViewBag.ImpactType</td>
-                    </tr>
-                    <tr>
-                        <td>Environment Type</td>
-                        <td class="fs15 fw700 text-right">@ViewBag.Environment</td>
-                    </tr>
-                    <tr>
-                        <td>Product Line</td>
-                        <td class="fs15 fw700 text-right">@ViewBag.ProductLine</td>
-                    </tr>
-                    <tr>
-                        <td>Customer Impacted</td>
-                        <td class="fs15 fw700 text-right">@ViewBag.CustomerType</td>
-                    </tr>
-                </tbody>
-            </table>
+                <table class="countries_list">
+                    <tbody>
+                        <tr>
+                            <td>Group Ownership</td>
+                            <td class="fs15 fw700 text-right">@ViewBag.GroupOwnership</td>
+                        </tr>
+                        <tr>
+                            <td>Datacenter</td>
+                            <td class="fs15 fw700 text-right">@ViewBag.Datacenter</td>
+                        </tr>
+                        <tr>
+                            <td>Impact Type</td>
+                            <td class="fs15 fw700 text-right">@ViewBag.ImpactType</td>
+                        </tr>
+                        <tr>
+                            <td>Environment Type</td>
+                            <td class="fs15 fw700 text-right">@ViewBag.Environment</td>
+                        </tr>
+                        <tr>
+                            <td>Product Line</td>
+                            <td class="fs15 fw700 text-right">@ViewBag.ProductLine</td>
+                        </tr>
+                        <tr>
+                            <td>Customer Impacted</td>
+                            <td class="fs15 fw700 text-right">@ViewBag.CustomerType</td>
+                        </tr>
+                    </tbody>
+                </table>
 
 
+            </div>
         </div>
     </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>Incident Times</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
+                        <div class="count">@ViewBag.StartDate</div>
+                        <h3>Start Date</h3>
+                    </div>
+                </div>
+
+                <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
+                        <div class="count">@ViewBag.EndDate</div>
+                        <h3>End Date</h3>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>Customer Notification</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <main ng-app="PomodoroApp" ng-controller="MainCtrl" style="margin-top:-40px;">
+                    <header></header>
+                    <section ng-click="toggleTimer()">
+                        <div class="timer">
+                            <p class="title">Time remaining:</p>
+                            <p>{{timeLeft}}</p><span class="fill" ng-style="{'height':fillHeight, 'background':fillColor }"></span>
+                        </div>
+                    </section>
+                </main>
+
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div class="col-md-4 col-sm-4 col-xs-12">
-    <div class="x_panel tile fixed_height_320">
-        <div class="x_title">
-            <h2>Incident Times</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
+<div class="row">
 
-            <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-                    <div class="count">@ViewBag.StartDate</div>
-                    <h3>Start Date</h3>
-                </div>
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>Incident Communication</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target=".timeline-modal">Add</button>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" style="overflow-y: scroll;overflow-x: hidden;">
+
+
+                <ul class="list-unstyled timeline">
+                    <li>
+                        <div class="block">
+                            <div class="tags">
+                                <a href="" class="tag">
+                                    <span>Update</span>
+                                </a>
+                            </div>
+                            <div class="block_content">
+                                <h2 class="title">
+                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                </h2>
+                                <p class="excerpt">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="block">
+                            <div class="tags">
+                                <a href="" class="tag">
+                                    <span>Update</span>
+                                </a>
+                            </div>
+                            <div class="block_content">
+                                <h2 class="title">
+                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                </h2>
+                                <p class="excerpt">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="block">
+                            <div class="tags">
+                                <a href="" class="tag">
+                                    <span>Update</span>
+                                </a>
+                            </div>
+                            <div class="block_content">
+                                <h2 class="title">
+                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                </h2>
+                                <p class="excerpt">
+                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>Additional Information</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <table class="countries_list">
+                    <tbody>
+                        <tr>
+                            <td>Crisis Manager:</td>
+                            <td class="fs15 fw700 text-right"> X</td>
+                        </tr>
+                        <tr>
+                            <td>Customer Success Manager</td>
+                            <td class="fs15 fw700 text-right"> Y</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="modal fade bs-example-modal-lg timeline-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Add Timeline</h4>
+            </div>
+            <div class="modal-body" id="timeline-modal-content">
+
+                <textarea id="message" required="required" class="form-control" name="message" rows="10"></textarea>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="saveTimeline();">Save changes</button>
             </div>
 
-            <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-                    <div class="count">@ViewBag.EndDate</div>
-                    <h3>End Date</h3>
-                </div>
-            </div>
-
-
         </div>
     </div>
 </div>
 
 
-<div class="col-md-4 col-sm-4 col-xs-12">
-    <div class="x_panel tile fixed_height_320">
-        <div class="x_title">
-            <h2>Customer Notification</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
+<script type="text/javascript">
 
-            <main ng-app="PomodoroApp" ng-controller="MainCtrl" style="margin-top:-40px;">
-                <header></header>
-                <section ng-click="toggleTimer()">
-                    <div class="timer">
-                        <p class="title">Time remaining:</p>
-                        <p>{{timeLeft}}</p><span class="fill" ng-style="{'height':fillHeight, 'background':fillColor }"></span>
-                    </div>
-                </section>
-            </main>
+    function saveTimeline() {
+        var text = $("#message").val();
+        $.ajax({
+            url: "/MajorIncidents/AddTimeline",
+            type: "GET",
+            data: { timeline: text },
+            success: function (data) {
 
+                // alert(JSON.stringify(data)); show entire object in JSON format
+                $.each(data, function (i, obj) {
+                    if(obj == 1)
+                        alert('good');
+                    else
+                        alert('bad');
+                });
+            }
+        });
+    }
 
-        </div>
-    </div>
-</div>
-
-
-
-<div class="col-md-8 col-sm-12 col-xs-12">
-    <div class="x_panel tile fixed_height_320" style="overflow-y: scroll;overflow-x: hidden;">
-        <div class="x_title">
-            <h2>Incident Communication</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-
-
-            <ul class="list-unstyled timeline">
-                <li>
-                    <div class="block">
-                        <div class="tags">
-                            <a href="" class="tag">
-                                <span>Update</span>
-                            </a>
-                        </div>
-                        <div class="block_content">
-                            <h2 class="title">
-                                <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                            </h2>
-                            <p class="excerpt">
-                                Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                            </p>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="block">
-                        <div class="tags">
-                            <a href="" class="tag">
-                                <span>Update</span>
-                            </a>
-                        </div>
-                        <div class="block_content">
-                            <h2 class="title">
-                                <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                            </h2>
-                            <p class="excerpt">
-                                Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                            </p>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="block">
-                        <div class="tags">
-                            <a href="" class="tag">
-                                <span>Update</span>
-                            </a>
-                        </div>
-                        <div class="block_content">
-                            <h2 class="title">
-                                <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                            </h2>
-                            <p class="excerpt">
-                                Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                            </p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-
-
-
-        </div>
-    </div>
-</div>
-
-
-<div class="col-md-4 col-sm-4 col-xs-12">
-    <div class="x_panel tile fixed_height_320">
-        <div class="x_title">
-            <h2>Additional Information</h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-
-            <table class="countries_list">
-                <tbody>
-                    <tr>
-                        <td>Crisis Manager:</td>
-                        <td class="fs15 fw700 text-right"> X</td>
-                    </tr>
-                    <tr>
-                        <td>Customer Success Manager</td>
-                        <td class="fs15 fw700 text-right"> Y</td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
-    </div>
-</div>
+</script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>

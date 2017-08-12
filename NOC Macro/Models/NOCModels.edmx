@@ -7,9 +7,8 @@
     <Schema Namespace="NOCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="MajorIncidents">
           <Key>
-            <PropertyRef Name="iD" />
+            <PropertyRef Name="incidentNumber" />
           </Key>
-          <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="incidentNumber" Type="int" Nullable="false" />
           <Property Name="descr" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="product" Type="varchar" MaxLength="256" Nullable="false" />
@@ -23,6 +22,15 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PermissionName" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Timeline">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="incidentNumber" Type="int" Nullable="false" />
+          <Property Name="time" Type="datetime" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -41,6 +49,20 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="PermissionID" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Timeline__incide__0E6E26BF">
+          <End Role="MajorIncidents" Type="Self.MajorIncidents" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Timeline" Type="Self.Timeline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MajorIncidents">
+              <PropertyRef Name="incidentNumber" />
+            </Principal>
+            <Dependent Role="Timeline">
+              <PropertyRef Name="incidentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__UsersPerm__Permi__5629CD9C">
           <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
           <End Role="UsersPermissions" Type="Self.UsersPermissions" Multiplicity="*" />
@@ -78,8 +100,13 @@
         <EntityContainer Name="NOCModelStoreContainer">
           <EntitySet Name="MajorIncidents" EntityType="Self.MajorIncidents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Timeline" EntityType="Self.Timeline" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersPermissions" EntityType="Self.UsersPermissions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Timeline__incide__0E6E26BF" Association="Self.FK__Timeline__incide__0E6E26BF">
+            <End Role="MajorIncidents" EntitySet="MajorIncidents" />
+            <End Role="Timeline" EntitySet="Timeline" />
+          </AssociationSet>
           <AssociationSet Name="FK__UsersPerm__Permi__5629CD9C" Association="Self.FK__UsersPerm__Permi__5629CD9C">
             <End Role="Permission" EntitySet="Permission" />
             <End Role="UsersPermissions" EntitySet="UsersPermissions" />
@@ -93,20 +120,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NOCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="MajorIncidents">
-          <Key>
-            <PropertyRef Name="iD" />
-          </Key>
-          <Property Name="iD" Type="Int32" Nullable="false" />
-          <Property Name="incidentNumber" Type="Int32" Nullable="false" />
-          <Property Name="descr" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="product" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="dataCenter" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="categorization" Type="Int32" Nullable="false" />
-          <Property Name="customerType" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="NOCEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="MajorIncidents" EntityType="Self.MajorIncidents" />
           <FunctionImport Name="AutenticateUser" ReturnType="Collection(Int32)">
             <Parameter Name="username" Mode="In" Type="String" />
             <Parameter Name="pass" Mode="In" Type="String" />
@@ -126,7 +140,13 @@
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="NewPassword" Mode="In" Type="String" />
           </FunctionImport>
-        </EntityContainer>
+          <EntitySet Name="MajorIncidents" EntityType="NOCModel.MajorIncidents" />
+          <EntitySet Name="Timeline" EntityType="NOCModel.Timeline" />
+          <AssociationSet Name="FK__Timeline__incide__0E6E26BF" Association="NOCModel.FK__Timeline__incide__0E6E26BF">
+            <End Role="MajorIncidents" EntitySet="MajorIncidents" />
+            <End Role="Timeline" EntitySet="Timeline" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Permission">
           <Key>
             <PropertyRef Name="Id" />
@@ -179,25 +199,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="MajorIncidents">
+          <Key>
+            <PropertyRef Name="incidentNumber" />
+          </Key>
+          <Property Name="incidentNumber" Type="Int32" Nullable="false" />
+          <Property Name="descr" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="product" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="dataCenter" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="categorization" Type="Int32" Nullable="false" />
+          <Property Name="customerType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Timeline" Relationship="NOCModel.FK__Timeline__incide__0E6E26BF" FromRole="MajorIncidents" ToRole="Timeline" />
+        </EntityType>
+        <EntityType Name="Timeline">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="incidentNumber" Type="Int32" Nullable="false" />
+          <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MajorIncidents" Relationship="NOCModel.FK__Timeline__incide__0E6E26BF" FromRole="Timeline" ToRole="MajorIncidents" />
+        </EntityType>
+        <Association Name="FK__Timeline__incide__0E6E26BF">
+          <End Type="NOCModel.MajorIncidents" Role="MajorIncidents" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NOCModel.Timeline" Role="Timeline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MajorIncidents">
+              <PropertyRef Name="incidentNumber" />
+            </Principal>
+            <Dependent Role="Timeline">
+              <PropertyRef Name="incidentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="NOCModelStoreContainer" CdmEntityContainer="NOCEntities">
-          <EntitySetMapping Name="MajorIncidents">
-            <EntityTypeMapping TypeName="NOCModel.MajorIncidents">
-              <MappingFragment StoreEntitySet="MajorIncidents">
-                <ScalarProperty Name="iD" ColumnName="iD" />
-                <ScalarProperty Name="incidentNumber" ColumnName="incidentNumber" />
-                <ScalarProperty Name="descr" ColumnName="descr" />
-                <ScalarProperty Name="product" ColumnName="product" />
-                <ScalarProperty Name="dataCenter" ColumnName="dataCenter" />
-                <ScalarProperty Name="categorization" ColumnName="categorization" />
-                <ScalarProperty Name="customerType" ColumnName="customerType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AutenticateUser" FunctionName="NOCModel.Store.AutenticateUser" />
           <EntitySetMapping Name="Permission">
             <EntityTypeMapping TypeName="NOCModel.Permission">
@@ -227,6 +270,28 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="UpdateUserPassword" FunctionName="NOCModel.Store.UpdateUserPassword" />
+          <EntitySetMapping Name="MajorIncidents">
+            <EntityTypeMapping TypeName="NOCModel.MajorIncidents">
+              <MappingFragment StoreEntitySet="MajorIncidents">
+                <ScalarProperty Name="customerType" ColumnName="customerType" />
+                <ScalarProperty Name="categorization" ColumnName="categorization" />
+                <ScalarProperty Name="dataCenter" ColumnName="dataCenter" />
+                <ScalarProperty Name="product" ColumnName="product" />
+                <ScalarProperty Name="descr" ColumnName="descr" />
+                <ScalarProperty Name="incidentNumber" ColumnName="incidentNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timeline">
+            <EntityTypeMapping TypeName="NOCModel.Timeline">
+              <MappingFragment StoreEntitySet="Timeline">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="incidentNumber" ColumnName="incidentNumber" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

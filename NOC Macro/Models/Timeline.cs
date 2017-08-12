@@ -12,20 +12,13 @@ namespace NOC_Macro.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MajorIncidents
+    public partial class Timeline
     {
-        public MajorIncidents()
-        {
-            this.Timeline = new HashSet<Timeline>();
-        }
-    
+        public int id { get; set; }
         public int incidentNumber { get; set; }
-        public string descr { get; set; }
-        public string product { get; set; }
-        public string dataCenter { get; set; }
-        public int categorization { get; set; }
-        public int customerType { get; set; }
+        public System.DateTime time { get; set; }
+        public string description { get; set; }
     
-        public virtual ICollection<Timeline> Timeline { get; set; }
+        public virtual MajorIncidents MajorIncidents { get; set; }
     }
 }

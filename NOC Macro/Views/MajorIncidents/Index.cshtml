@@ -59,7 +59,7 @@
                             @Html.DisplayFor(modelItem => item.customerType)
                         </td>
                         <td>
-                            @Html.ActionLink("Delete", "Delete", new { id = item.iD },new { @class="btn btn-danger" })
+                            @Html.ActionLink("Delete", "Delete", new { incidentNumber = item.incidentNumber },new { @class="btn btn-danger" })
                         </td>
                     </tr>
                 }
