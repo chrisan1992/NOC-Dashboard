@@ -107,12 +107,13 @@
     //page is reloaded
     function DeleteMajorIncident()
     {
-        var toDelete = $("#delete_id").val();
-        $.ajax({
+        var toDelete = $("#delete_id").val();//gets the id from the input
+        $.ajax({//call the ajax in order to delete
             url: "/MajorIncidents/DeleteConfirmed",
             type: "GET",
             data: { delete_id: toDelete },
             success: function (data) {
+                //if delete successful, reload the page
                 location.href = location.href;
             }
         });

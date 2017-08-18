@@ -299,6 +299,7 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <Content Include="Views\MajorIncidents\Dashboard.cshtml" />
+    <Content Include="Views\MajorIncidents\Timeline.cshtml" />
     <None Include="Web References\com.hpe.saas.essentials\DemandService.wsdl" />
     <None Include="Web References\com.hpe.saas.essentials\DemandService.xsd">
       <SubType>Designer</SubType>

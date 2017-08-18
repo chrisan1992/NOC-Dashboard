@@ -1,0 +1,27 @@
+﻿@model IEnumerable<NOC_Macro.Models.Timeline>
+
+<ul class="list-unstyled timeline">
+    @foreach (var item in Model)
+    {
+        <li>
+            <div class="block">
+                <div class="tags">
+                    <a href="" class="tag">
+                        <span>@Html.DisplayFor(modelItem => item.time)</span>
+                    </a>
+                </div>
+                <div class="block_content">
+                    <h2 class="title">
+                        <a>Update:</a>
+                    </h2>
+                    <div class="byline">
+                        by @Html.DisplayFor(modelItem => item.username)
+                    </div>
+                    <p class="excerpt">
+                        @Html.DisplayFor(modelItem => item.description)
+                    </p>
+                </div>
+            </div>
+        </li>
+    }
+</ul>

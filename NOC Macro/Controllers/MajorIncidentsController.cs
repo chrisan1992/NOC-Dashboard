@@ -36,21 +36,19 @@ namespace NOC_Macro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "incidentNumber,descr,product,dataCenter,categorization,customerType,topCustomers")] MajorIncidents majorIncidents, string[] product, string[] datacenter, string lyncCall)
         {
-            majorIncidents.dataCenter = "";
-            foreach (string d in datacenter)
-            {
-                majorIncidents.dataCenter += d + "-";
-            }
-            majorIncidents.dataCenter = majorIncidents.dataCenter.Remove(majorIncidents.dataCenter.Length - 1);
-            majorIncidents.product = "";
-            foreach (string p in product)
-            {
-                majorIncidents.product += p + "-";
-            }
-            majorIncidents.product = majorIncidents.product.Remove(majorIncidents.product.Length - 1);
+            majorIncidents.dataCenter = string.Join(",",datacenter);
+            majorIncidents.product = string.Join(",", product);
             if (ModelState.IsValid)
             {
                 db.MajorIncidents.Add(majorIncidents);
+                //now I have to add the first timeline to the incident
+                Timeline t = new Timeline();
+                t.incidentNumber = majorIncidents.incidentNumber;
+                t.description = "Incident #"+majorIncidents.incidentNumber+" - "+majorIncidents.descr+" is opened.";
+                t.time = DateTime.Now;
+                t.username = Session["username"].ToString();
+                db.Timeline.Add(t);
+                //save changes to DB
                 db.SaveChanges();
                 String emailResult = new EmailSender().SendMacroEmail(majorIncidents, lyncCall);
                 Session["message"] = "Major Incident created, email is being sent in the background.";
@@ -143,6 +141,7 @@ namespace NOC_Macro.Controllers
                 if (dt != null)
                 {
                     //group, datacenter, impact, environment, product, customers impacted
+                    ViewBag.IncidentNumber = id;
                     ViewBag.IncidentName = dt.Rows[0][0].ToString();
                     ViewBag.StartDate = dt.Rows[0][1].ToString();
                     ViewBag.EndDate = dt.Rows[0][2].ToString();
@@ -153,13 +152,14 @@ namespace NOC_Macro.Controllers
                     ViewBag.Environment = dt.Rows[0][5].ToString();
                     ViewBag.ProductLine = dt.Rows[0][9].ToString();
                 }
-
-                //query the database to get the timeline rows
-                List<Timeline> timeline = db.Timeline.ToList();
-                //send the timeline to the interface
-                ViewBag.Timeline = timeline;
             }
             return View();
+        }
+
+        public PartialViewResult Timeline(int incidentNumber)
+        {
+            List<Timeline> timeline = db.Timeline.Where(row => row.incidentNumber == incidentNumber).ToList();
+            return PartialView("Timeline", timeline);
         }
 
         /// <summary>
