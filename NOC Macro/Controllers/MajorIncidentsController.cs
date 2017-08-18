@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using NOC_Macro.Models;
 using System.Net.Mail;
 using Oracle.ManagedDataAccess.Client;
+using System.Threading;
 
 namespace NOC_Macro.Controllers
 {
@@ -22,21 +23,6 @@ namespace NOC_Macro.Controllers
             return View(db.MajorIncidents.ToList());
         }
 
-        // GET: MajorIncidents/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MajorIncidents majorIncidents = db.MajorIncidents.Find(id);
-            if (majorIncidents == null)
-            {
-                return HttpNotFound();
-            }
-            return View(majorIncidents);
-        }
-
         // GET: MajorIncidents/Create
         public ActionResult Create()
         {
@@ -48,23 +34,26 @@ namespace NOC_Macro.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "incidentNumber,descr,product,dataCenter,categorization,customerType")] MajorIncidents majorIncidents, string[] product, string[] datacenter, string lyncCall)
+        public ActionResult Create([Bind(Include = "incidentNumber,descr,product,dataCenter,categorization,customerType,topCustomers")] MajorIncidents majorIncidents, string[] product, string[] datacenter, string lyncCall)
         {
             majorIncidents.dataCenter = "";
-            majorIncidents.product = "";
             foreach (string d in datacenter)
             {
                 majorIncidents.dataCenter += d + "-";
             }
+            majorIncidents.dataCenter = majorIncidents.dataCenter.Remove(majorIncidents.dataCenter.Length - 1);
+            majorIncidents.product = "";
             foreach (string p in product)
             {
                 majorIncidents.product += p + "-";
             }
+            majorIncidents.product = majorIncidents.product.Remove(majorIncidents.product.Length - 1);
             if (ModelState.IsValid)
             {
                 db.MajorIncidents.Add(majorIncidents);
                 db.SaveChanges();
                 String emailResult = new EmailSender().SendMacroEmail(majorIncidents, lyncCall);
+                Session["message"] = "Major Incident created, email is being sent in the background.";
                 return RedirectToAction("Index");
             }
 
@@ -91,7 +80,7 @@ namespace NOC_Macro.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "iD,incidentNumber,descr,product,dataCenter,categorization,customerType")] MajorIncidents majorIncidents)
+        public ActionResult Edit([Bind(Include = "incidentNumber,descr,product,dataCenter,categorization,customerType,topCustomers")] MajorIncidents majorIncidents)
         {
             if (ModelState.IsValid)
             {
@@ -101,31 +90,19 @@ namespace NOC_Macro.Controllers
             }
             return View(majorIncidents);
         }
-
-        // GET: MajorIncidents/Delete/5
-        public ActionResult Delete(int? incidentNumber)
+        
+        public JsonResult DeleteConfirmed(int delete_id)
         {
-            if (incidentNumber == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MajorIncidents majorIncidents = db.MajorIncidents.Find(incidentNumber);
-            if (majorIncidents == null)
-            {
-                return HttpNotFound();
-            }
-            return View(majorIncidents);
-        }
-
-        // POST: MajorIncidents/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            MajorIncidents majorIncidents = db.MajorIncidents.Find(id);
+            MajorIncidents majorIncidents = db.MajorIncidents.Find(delete_id);
             db.MajorIncidents.Remove(majorIncidents);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            Session["message"] = "Incident has been deleted.";
+            var results = new List<int>()
+                {
+                    1
+                }.ToList();
+            //1 is good
+            return Json(results, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
@@ -161,7 +138,7 @@ namespace NOC_Macro.Controllers
                 //Where
                 query += "where dets.request_id = " + id + " and reqs.request_id = " + id + " and hdets.request_id = " + id + " and dets.batch_number = 1";
 
-
+                //executes the query and return the results
                 DataTable dt = Utilities.ExecuteOracleQuery(query);
                 if (dt != null)
                 {
@@ -176,13 +153,20 @@ namespace NOC_Macro.Controllers
                     ViewBag.Environment = dt.Rows[0][5].ToString();
                     ViewBag.ProductLine = dt.Rows[0][9].ToString();
                 }
+
+                //query the database to get the timeline rows
+                List<Timeline> timeline = db.Timeline.ToList();
+                //send the timeline to the interface
+                ViewBag.Timeline = timeline;
             }
             return View();
         }
 
-
-
-
+        /// <summary>
+        /// Adds an update to the timeline and returns the result
+        /// </summary>
+        /// <param name="timeline">update to add</param>
+        /// <returns></returns>
         public JsonResult AddTimeline(string timeline)
         {
             //every line of the json reads every number
@@ -192,6 +176,7 @@ namespace NOC_Macro.Controllers
                 t.description = timeline;
                 t.incidentNumber = 135102;//CHANGE THIS!!!
                 t.time = DateTime.Now;
+                t.username = Session["username"].ToString();
                 db.Timeline.Add(t);
                 db.SaveChanges();
                 var results = new List<int>()
@@ -209,9 +194,13 @@ namespace NOC_Macro.Controllers
                 }.ToList();
                 //0 is bad
                 return Json(results, JsonRequestBehavior.AllowGet);
-            }
+            }            
+        }
 
-            
+        public JsonResult IsIncidentExists(int incidentNumber)
+        {
+            //check if any of the UserName matches the UserName specified in the Parameter using the ANY extension method.  
+            return Json(!db.MajorIncidents.Any(x => x.incidentNumber == incidentNumber), JsonRequestBehavior.AllowGet);
         }
     }
 }

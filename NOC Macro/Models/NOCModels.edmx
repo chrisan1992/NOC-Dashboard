@@ -15,6 +15,7 @@
           <Property Name="dataCenter" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="categorization" Type="int" Nullable="false" />
           <Property Name="customerType" Type="int" Nullable="false" />
+          <Property Name="topCustomers" Type="varchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="Permission">
           <Key>
@@ -31,6 +32,7 @@
           <Property Name="incidentNumber" Type="int" Nullable="false" />
           <Property Name="time" Type="datetime" Nullable="false" />
           <Property Name="description" Type="varchar(max)" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -210,6 +212,7 @@
           <Property Name="categorization" Type="Int32" Nullable="false" />
           <Property Name="customerType" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Timeline" Relationship="NOCModel.FK__Timeline__incide__0E6E26BF" FromRole="MajorIncidents" ToRole="Timeline" />
+          <Property Name="topCustomers" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Timeline">
           <Key>
@@ -220,6 +223,7 @@
           <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MajorIncidents" Relationship="NOCModel.FK__Timeline__incide__0E6E26BF" FromRole="Timeline" ToRole="MajorIncidents" />
+          <Property Name="username" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__Timeline__incide__0E6E26BF">
           <End Type="NOCModel.MajorIncidents" Role="MajorIncidents" Multiplicity="1">
@@ -273,6 +277,7 @@
           <EntitySetMapping Name="MajorIncidents">
             <EntityTypeMapping TypeName="NOCModel.MajorIncidents">
               <MappingFragment StoreEntitySet="MajorIncidents">
+                <ScalarProperty Name="topCustomers" ColumnName="topCustomers" />
                 <ScalarProperty Name="customerType" ColumnName="customerType" />
                 <ScalarProperty Name="categorization" ColumnName="categorization" />
                 <ScalarProperty Name="dataCenter" ColumnName="dataCenter" />
@@ -285,6 +290,7 @@
           <EntitySetMapping Name="Timeline">
             <EntityTypeMapping TypeName="NOCModel.Timeline">
               <MappingFragment StoreEntitySet="Timeline">
+                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="incidentNumber" ColumnName="incidentNumber" />

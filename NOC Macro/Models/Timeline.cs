@@ -18,6 +18,7 @@ namespace NOC_Macro.Models
         public int incidentNumber { get; set; }
         public System.DateTime time { get; set; }
         public string description { get; set; }
+        public string username { get; set; }
     
         public virtual MajorIncidents MajorIncidents { get; set; }
     }

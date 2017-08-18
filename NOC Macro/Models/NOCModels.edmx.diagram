@@ -11,7 +11,7 @@
         <AssociationConnector Association="NOCModel.FK__UsersPerm__Permi__36B12243" />
         <AssociationConnector Association="NOCModel.FK__UsersPerm__UserI__37A5467C" />
         <EntityTypeShape EntityType="NOCModel.MajorIncidents" Width="1.5" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="NOCModel.Timeline" Width="1.5" PointX="0.5" PointY="3.125" />
+        <EntityTypeShape EntityType="NOCModel.Timeline" Width="1.5" PointX="0.5" PointY="3.375" />
         <AssociationConnector Association="NOCModel.FK__Timeline__incide__0E6E26BF" />
         </Diagram>
     </edmx:Diagrams>

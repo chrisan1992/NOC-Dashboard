@@ -25,6 +25,7 @@ namespace NOC_Macro.Models
         public string dataCenter { get; set; }
         public int categorization { get; set; }
         public int customerType { get; set; }
+        public string topCustomers { get; set; }
     
         public virtual ICollection<Timeline> Timeline { get; set; }
     }

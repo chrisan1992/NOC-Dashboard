@@ -17,6 +17,8 @@
     @Styles.Render("~/Content/custom.css")
 
 
+    <!-- jQuery -->
+    @Scripts.Render("~/Scripts/jquery.js")
     
 
 
@@ -116,15 +118,13 @@
         </div>
     </div>
 
-    <!-- jQuery -->
-    @Scripts.Render("~/Scripts/jquery.js")
+    
     <!-- Bootstrap -->
     @Scripts.Render("~/Scripts/bootstrap.min.js")
     <!-- jQuery custom content scroller -->
     @Scripts.Render("~/Scripts/jquery.mCustomScrollbar.concat.min.js")
     <!-- Custom Theme Scripts -->
     @Scripts.Render("~/Scripts/custom.min.js")
-
 
     @{
         if (Session["message"] != null && Session["message"].ToString() != "null")

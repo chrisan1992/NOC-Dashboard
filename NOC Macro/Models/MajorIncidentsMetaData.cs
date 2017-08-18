@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace NOC_Macro.Models
 {
@@ -15,8 +16,10 @@ namespace NOC_Macro.Models
     public class MajorIncidentsMetaData
     {
 
+        
         [Display(Name = "Incident #")]
         [Required(ErrorMessage = "Incident # is required")]
+        [Remote("IsIncidentExists", "Home", ErrorMessage = "User Name already in use")]
         public int incidentNumber { get; set; }
 
         [Display(Name = "Description")]

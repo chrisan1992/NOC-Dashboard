@@ -279,8 +279,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\MajorIncidents\Create.cshtml" />
-    <Content Include="Views\MajorIncidents\Delete.cshtml" />
-    <Content Include="Views\MajorIncidents\Details.cshtml" />
     <Content Include="Views\MajorIncidents\Edit.cshtml" />
     <Content Include="Views\MajorIncidents\Index.cshtml" />
     <Content Include="Views\Shared\Login.cshtml" />
