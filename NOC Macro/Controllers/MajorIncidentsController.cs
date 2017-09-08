@@ -156,6 +156,11 @@ namespace NOC_Macro.Controllers
             return View();
         }
 
+        /// <summary>
+        /// partial view to render the timeline items for a major incident
+        /// </summary>
+        /// <param name="incidentNumber"></param>
+        /// <returns></returns>
         public PartialViewResult Timeline(int incidentNumber)
         {
             List<Timeline> timeline = db.Timeline.Where(row => row.incidentNumber == incidentNumber).ToList();

@@ -14,18 +14,18 @@
             <h1>Register new User</h1>
             <hr />
             <div>
-                    <input type="text" class="form-control" name="UserName" placeholder="Name" required="" />
-                
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder="Username..." } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
             </div>
 
             <div>
-                    <input type="email" class="form-control" name="Email" placeholder="Email" required="" />
-                
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email..." } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
 
             <div>
-                    <input type="password" class="form-control" name="EmailPass" placeholder="Password" required="" />
-                
+                @Html.EditorFor(model => model.Emailpass, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @type="password" } })
+                @Html.ValidationMessageFor(model => model.Emailpass, "", new { @class = "text-danger" })
             </div>
 
             <div>

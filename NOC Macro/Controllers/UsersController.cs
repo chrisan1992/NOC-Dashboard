@@ -76,7 +76,6 @@ namespace NOC_Macro.Controllers
             {
                 return HttpNotFound();
             }
-            String v = ViewBag.Message;
             return View(users);
         }
 
@@ -142,8 +141,6 @@ namespace NOC_Macro.Controllers
             {
                 return HttpNotFound();
             }
-            String v = ViewBag.Message;
-            ViewBag.id = id;
             return View(users);
         }
 

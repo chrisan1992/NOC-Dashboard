@@ -188,6 +188,7 @@
     <Compile Include="Models\Users.cs">
       <DependentUpon>NOCModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsersMetaData.cs" />
     <Compile Include="Models\UsersPermissions.cs">
       <DependentUpon>NOCModels.tt</DependentUpon>
     </Compile>
